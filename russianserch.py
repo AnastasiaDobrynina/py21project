@@ -1,27 +1,5 @@
 import re
 
-#with open('slovar_new.txt', 'r', encoding='utf-8') as f:
-    #words = []
-    #definitions = []
-    #for line in f.readlines():
-        #line = line.split(' — ') #посмотреть как делила Настя потому что у меня проблемы (не везде есть тире)
-        #word = line[0]
-        #if (line[0]!=line[-1]):
-            #definition = line[1] #сделать не срез, а удалить из line word??
-        #else:
-            #definition = ''
-        #words.append(word)
-        #definitions.append(definition)
-    #dictionary = {}
-    #for i in range(len(words)):
-        #dictionary[words[i]] = definitions[i]
-    #request = input()
-    #for word, definition in dictionary.items():
-        #slova = definition.split()
-        #for w in slova:
-            #if w.startswith(request):
-                #print(word, definition)
-
 dict_word = {}
 with open("slovar_new.txt", "r", encoding="utf-8") as file:
     data = file.readlines()
@@ -52,15 +30,36 @@ with open("slovar_new.txt", "r", encoding="utf-8") as file:
                 value_word = " ".join(word_list[1:])
                 dict_word.setdefault(key_word, []).append(value_word)
 request = input()
+punct = ';,'
+
+u = 0
+print('Точные совпадения: ')
+for word, definition in dict_word.items():
+    new_definition = ''
+    for d in definition:
+        new_definition += str(d)
+    newnew_def = re.split(';|,', new_definition)
+    for b in newnew_def:
+        if b == request:
+            u += 1
+            for elem in definition:
+                print(word)
+                pr_def = elem.split(';')
+                for e in pr_def:
+                    print(e)
+if u == 0:
+    print('Точных совпадений не найдено.')
+
 k = 0
+print('Слова, содержащие ваш запрос: ')
 for word, definition in dict_word.items():
     for w in definition:
         if request in w:
             k += 1
-            print(word)
             for elem in definition:
+                print(word)
                 pr_def = elem.split(';')
                 for e in pr_def:
                     print(e)
 if k == 0:
-    print('Такого слова нет в словаре')
+    print('Такого слова нет в словаре.')
