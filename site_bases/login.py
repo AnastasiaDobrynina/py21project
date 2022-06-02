@@ -22,9 +22,13 @@ def tab_tr():
 def login():
     return render_template('login.html')
 
+@app.route("/author")
+def genco():
+    return render_template('genco.html')
+
 @app.route("/start_results")
 def search_start():
-    args = request.args
+    args = request.args # словарь с результатами
     if args['nm']:
         if search_begin(args['nm']):
             return render_template('login.html', answers=search_begin(args['nm']))
